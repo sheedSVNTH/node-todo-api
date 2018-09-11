@@ -19,6 +19,7 @@ app.post('/todos', (req, res) => {
 	var todo = new Todo({
 		text: req.body.text
 	});
+	
 	todo.save().then((doc) => {
 		res.send(doc);
 	}, (e) => {
@@ -27,6 +28,13 @@ app.post('/todos', (req, res) => {
 });
 
 
+app.get('/todos', (req, res) => {
+	Todo.find().then((todos) => {
+		res.send({todos});
+	}, (e) => {
+		res.status(400).send(e);
+	});
+});
 
 //Local Port 3000 set-up
 app.listen(3000, () => {
