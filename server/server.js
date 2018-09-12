@@ -11,9 +11,9 @@ var {User} = require('./models/user');
 
 //Call to Express
 var app = express();
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
-
 //Body-parser will take JSON and convert it to object, attaching to req object
 
 app.post('/todos', (req, res) => {
@@ -58,9 +58,33 @@ app.get('/todos/:id', (req, res) => {
 	});
 });
 
+app.delete('/todos/:id', (req, res) => {
+	// get the id
+	// validate the id -> not valid? return 404
+	
+	// remove todo by id
+		//success
+		// error
+		// 400 with empty body
+	var id = req.params.id;
+	
+	if (!ObjectID.isValid(id)) {
+		return res.status(404).send();
+	}
+	Todo.findByIdAndRemove(id).then((todo) => {
+	if(!todo) {
+		return res.status(404).send();
+	}
+		res.send(todo);
+	}).catch((e) => {
+		res.status(400).send();
+	});
+
+});
+
 //Local Port 3000 set-up
-app.listen(3000, () => {
-	console.log('--Started on Port 3000--');
+app.listen(port, () => {
+	console.log(`Started up at port ${port}`);
 });
 
 module.exports ={app};
