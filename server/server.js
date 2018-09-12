@@ -58,6 +58,7 @@ app.get('/todos/:id', (req, res) => {
 	});
 });
 
+//DELETE /todos/:id ROUTE
 app.delete('/todos/:id', (req, res) => {
 	// get the id
 	// validate the id -> not valid? return 404
@@ -75,7 +76,7 @@ app.delete('/todos/:id', (req, res) => {
 	if(!todo) {
 		return res.status(404).send();
 	}
-		res.send(todo);
+		res.send({todo});
 	}).catch((e) => {
 		res.status(400).send();
 	});
